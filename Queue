@@ -1,0 +1,255 @@
+//队列
+//一.顺序结构实现
+/*
+#include <stdio.h>       //引入输入输出头文件。作用：支持printf（打印），scanf（输入）等函数。
+#include <stdlib.h>
+#define MAXSIZE 100             //定义队列最大容量为100
+typedef int ElemType;
+typedef struct {
+	ElemType data[MAXSIZE];
+	int front;           //队头指针（指向队头元素的位置）
+	int rear;             //队尾指针（指向队尾元素的下一个位置）
+}Queue;
+*/
+//判断队列是否为空
+/*
+int isEmpty(Queue* Q) {           //传入队列指针，返回1=空，0=非空
+	if (Q->front == Q->rear) {     //队为空：队头=队尾
+		printf("空的\n");
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}*/
+//队尾满了，调整队列
+/*int queueFull(Queue* Q) {            //检查队列是否满了，满了则调整（避免假溢出）
+	if (Q->front > 0) {              //如果队头指针不在数组的开头，则表示有空闲时间
+		int step = Q->front;          
+		for (int i = Q->front; i <= Q->rear; i++) {        //记录队头的偏移量，把队列元素整体往前挪动，填补前面的空闲位置   
+			Q->data[i - step] = Q->data[i];
+		}
+		Q->front = 0;                //队头重置到数组开头
+		Q->rear = Q->rear - step;        //队尾指针同步前移
+		return 1;
+	}
+	else {
+		printf("真的满了\n");    //队头在开头，且rear到MAXSIZE
+		return 0;
+	}
+}*/
+//入队
+/*int enqueue(Queue* Q, ElemType e) {       //入队：把元素e加入队列
+	if (Q->rear >= MAXSIZE) {            //现检查队列是否满了
+			return 0;
+		}
+		Q->data[Q->rear] = e;                  //把元素e传入队尾指针指向的位置
+		Q->rear++;             //队尾指针向后移动一位
+		printf("入队成功，新rear=%d\n", Q->rear);
+		return 1;
+  }*/
+//获得队头元素
+/*int getHead(Queue* Q, ElemType* e) {
+	if (Q->front == Q->rear) {    
+		printf("空的\n");
+		return 0;
+	}
+	*e = Q->data[Q->front];         //把队头元素赋值给e（通过指针带回）
+	return 1;
+ }
+*/
+//出队
+/*int dequeue(Queue* Q, ElemType* e) {
+	if (Q->front == Q->rear) {
+		printf("空的\n");
+		return 0;
+	}
+	 *e = Q->data[Q->front];      //把队头元素赋值给e（通过指针带回）
+	Q->front++;
+	return 1;
+}
+int main() {
+	Queue Q;
+	Q.front = Q.rear = 0;
+	enqueue(&Q, 10);
+	enqueue(&Q, 20);
+    enqueue(&Q, 30);
+	printf("入队结果：%d,%d,%d\n",10,20,30);
+	ElemType head;
+	if (getHead(&Q, &head)) {
+       printf("当前队头元素：%d\n",head);
+	}
+	ElemType out;
+	if (dequeue(&Q, &out)) {
+      printf("出队元素：%d\n", out);
+	}
+	if(getHead(&Q, &head)){
+      printf("出队后队头：%d\n", head);
+	}
+	return 0;
+}*/
+//顺序结构--循环队列
+/*#include <stdio.h>       //引入输入输出头文件。作用：支持printf（打印），scanf（输入）等函数。
+#include <stdlib.h>
+#define MAXSIZE 100             //定义队列最大容量为100
+typedef int ElemType;
+typedef struct {
+	ElemType data[MAXSIZE];
+	int front;           //队头指针（指向队头元素的位置）
+	int rear;             //队尾指针（指向队尾元素的下一个位置）
+}Queue;
+//判断队列是否为空
+int isEmpty(Queue* Q) {           //传入队列指针，返回1=空，0=非空
+	if (Q->front == Q->rear) {     //队为空：队头=队尾
+		printf("空的\n");
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+//判断队列是否满了（循环队列的核心修改：(（rear+1）%MAXSIZE==front)
+int queueFull(Queue* Q) {            //循环队列判断满：牺牲一个位置，避免和判空混淆
+	if ((Q->rear+1)%MAXSIZE==Q->front) { 
+		printf("真的满了\n");
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+//入队（循环队列：rear用取模更新）
+int enqueue(Queue* Q, ElemType e) {       //入队：把元素e加入队列
+	if ((Q->rear+1)% MAXSIZE==Q->front) { 
+		printf("满了\n");
+		return 0;
+	}
+	Q->data[Q->rear] = e;                  //元素入队
+	Q->rear=(Q->rear+1)%MAXSIZE;             //队尾循环后移
+	return 1;
+}*/
+//获得队头元素
+/*int getHead(Queue* Q, ElemType* e) {
+	if (Q->front == Q->rear) {
+		printf("空的\n");
+		return 0;
+	}
+	*e = Q->data[Q->front];      //取出队头元素
+	return 1;
+}*/
+
+//出队（循环队列：front用取模更新）
+/*int dequeue(Queue* Q, ElemType* e) {
+	if (Q->front == Q->rear) {
+		printf("空的\n");
+		return 0;
+	}
+	*e = Q->data[Q->front];      //取出队头元素
+	Q->front=(Q->front+1)%MAXSIZE;    //队头循环后移
+	return 1;
+}
+int main() {
+	Queue Q;
+	Q.front = Q.rear = 0;
+	enqueue(&Q, 10);
+	enqueue(&Q, 20);
+	enqueue(&Q, 30);
+	printf("入队结果：%d,%d,%d\n", 10, 20, 30);
+	ElemType head;
+	if (getHead(&Q, &head)) {
+		printf("当前队头元素：%d\n", head);
+	}
+	ElemType out;
+	if (dequeue(&Q, &out)) {
+		printf("出队元素：%d\n", out);
+	}
+	if (getHead(&Q, &head)) {
+		printf("出队后队头：%d\n", head);
+	}
+	return 0;
+}
+*/
+//链式结构
+/*
+#include <stdio.h>      
+#include <stdlib.h>
+typedef int ElemType;
+typedef struct QueueNode{  //定义队列节点（存储单个元素+指向下一个节点的指针）
+	int data;              //节点存储的数据
+	struct QueueNode* next;   //指向下一个节点的指针
+}QueueNode;
+typedef struct {        //定义链式队列（管理队头，队尾指针）
+	QueueNode* front;
+	QueueNode* rear;
+}LinkQueue;
+//一.初始化
+LinkQueue* initQueue() {
+	LinkQueue* q = (LinkQueue*)malloc(sizeof(LinkQueue)); //申请队列结构体的内存
+	if (q == NULL) {
+		printf("队列内存申请失败\n");
+		return NULL;
+	}
+	//申请头节点（空节点，不存数据）
+	QueueNode* node = (QueueNode*)malloc(sizeof(QueueNode));
+	if (node==NULL) {
+		printf("头节点内存申请失败\n");
+		free(q);    //释放已经申请的队列内存
+		return NULL;
+	}
+	node->data = 0;   //设置头节点数据为0
+	node->next = NULL;  //头节点初始无后继
+	q->front = node;           //队头，队尾都指向头节点
+	q->rear = node;
+	return q;
+}
+//判断队列是否为空
+int isEmpty(LinkQueue* q) {
+	if (q->front == q->rear) {
+		printf("空的\n");
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+//入队
+void equeue(LinkQueue* q, ElemType e) {
+	QueueNode* node = (QueueNode*)malloc(sizeof(QueueNode));
+	node->data = e;
+	node->next = NULL;
+	q->rear->next = node;
+	q->rear = node;
+}
+int dequeue(LinkQueue* q, ElemType *e) {
+	QueueNode* node = q->front->next;
+	*e = node->data;
+	q->front->next = node->next;
+	if (q->rear == node) {
+		q->rear = q->front;
+	}
+	free(node);
+	return 1;
+}
+//获取队头元素
+ElemType getFront(LinkQueue* q) {
+	if (isEmpty(q)) {
+		printf("空的\n");
+		return 0;
+	}
+	return q->front->next->data;
+}
+int main() {
+	LinkQueue* q = initQueue();
+	equeue(q, 10);
+	equeue(q, 20);
+	equeue(q, 30);
+	equeue(q, 40);
+	equeue(q, 50);
+	ElemType e;
+	dequeue(q, &e);
+	printf("出队%d\n", e);
+	dequeue(q, &e);
+	printf("出队%d\n", e);
+	printf("%d\n", getFront(q));
+	return 0;
+}*/
