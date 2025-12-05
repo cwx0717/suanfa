@@ -1,0 +1,168 @@
+//顺序表 
+//一.初始化
+/*
+#define MAXSIZE 100   //作用：约定顺序表最多存100个元素
+typedef int ElemType;      // typedef：类型重定义 ，把int重命名为ElemType。好处：如果后续想把元素的类型改成别的例如char等，只需要改这一行。
+typedef struct {               //定义顺序表结构体
+	ElemType data[MAXSIZE];         //存储顺序表元素元组
+	int length;                    //记录顺序表当前有效元素个数
+}SeqList;   //把匿名结构体重命名为SeqList
+void initList(SeqList *L)
+{
+	L->length = 0;       //把顺序表的有效长度设置为0
+}
+int main() {
+	SeqList List;    //定义一个顺序表List
+	initList(&List);       //调用函数initList
+	printf("初始化成功，目前长度占用%d\n", List.length);
+	printf("目前占用内存%zu字节\n", sizeof(List.data));
+	return 0;
+}*/
+//二.在尾部添加元素：
+/*int appendElem(SeqList* L, ElemType e) {
+	if (L->length >= MAXSIZE) {            //检查顺序表是否已满
+		printf("顺序表已满\n");
+		return 0;                           //返回0，添加失败.
+	}
+	L->data[L->length] = e;            //把新元素添加到尾部
+	L->length++;
+	return 1;                           //返回1，添加成功
+}
+int main() {
+	SeqList List;    //定义一个顺序表List
+	initList(&List);       //调用函数initList，初始化
+	printf("初始化成功，目前长度占用%d\n", List.length);
+	printf("目前占用内存%zu字节\n", sizeof(List.data));
+	int res = appendElem(&List, 88);        //调用添加结果          
+	if (res == 1) {
+		printf("元素88添加成功，当前长度：%d\n", List.length);
+		printf("尾部元素值：%d\n", List.data[List.length - 1]);
+	}
+	return 0;
+}*/
+//三.遍历  （按照一定规则，依次访问数据结构中的每一个元素，且每一个元素仅仅访问一次的过程）
+/*void ListElem(SeqList* L) {
+	for (int i = 0; i < L->length; i++) {
+		printf("%d ", L->data[i]);           //%d后面+空格  使结果之间有间隙。
+	}
+	printf("\n");
+}
+int main() {
+	SeqList List;    //定义一个顺序表List
+	initList(&List);       //调用函数initList，初始化
+	printf("初始化成功，目前长度占用%d\n", List.length);
+	printf("目前占用内存%zu字节\n", sizeof(List.data));
+	appendElem(&List, 88);
+	appendElem(&List, 45);
+	appendElem(&List, 43);
+	appendElem(&List, 17);
+	ListElem(&List);         //遍历
+	return 0;
+}*/
+//四.插入
+/*int insertElem(SeqList* L, int pos, ElemType e) {
+	if (L->length>=MAXSIZE) {
+		printf("表已经满了\n");
+		return 0;
+	}
+	if (pos<1 || pos>L->length) {
+		printf("插入位置错误\n");
+		return 0;
+	}
+	if (pos <= L->length) {
+		for (int i = L->length - 1; i >= pos - 1; i--) {
+			L->data[i + 1] = L->data[i];           //当前下标i，往后移动到i+1；
+			 }
+		L->data[pos - 1] = e;
+		L->length++;
+		return 1;
+	}
+}
+
+int main() {
+	SeqList List;    //定义一个顺序表List
+	initList(&List);       //调用函数initList，初始化
+	printf("初始化成功，目前长度占用%d\n", List.length);
+	printf("目前占用内存%zu字节\n", sizeof(List.data));
+	appendElem(&List, 88);
+	appendElem(&List, 67);
+	appendElem(&List, 40);
+	appendElem(&List, 8);
+	appendElem(&List, 23);
+	ListElem(&List);
+	insertElem(&List, 2, 18);
+	ListElem(&List);
+	return 0;
+}*/
+//五.删除
+/*int deleteElem(SeqList *L, int pos, ElemType *e) {
+	if (L->length == 0) {
+		printf("空表\n");
+		return 0;
+	}
+	if (pos>L->length || pos<1) {
+		printf("删除的位置有误\n");
+		return 0;
+	}
+	*e = L->data[pos - 1];
+	if (pos<L->length) {
+		for (int i = pos; i < L->length;i++) {
+			L->data[i - 1] = L->data[i];
+		}
+		
+	}L->length--;
+	return 1;
+}
+int main() {
+	SeqList List;    //定义一个顺序表List
+	initList(&List);       //调用函数initList，初始化
+	printf("初始化成功，目前长度占用%d\n", List.length);
+	printf("目前占用内存%zu字节\n", sizeof(List.data));
+	appendElem(&List, 88);
+	appendElem(&List, 67);
+	appendElem(&List, 40);
+	appendElem(&List, 8);
+	appendElem(&List, 23);
+	ListElem(&List);
+	insertElem(&List, 2, 18);
+	ListElem(&List);
+	ElemType delData;
+	deleteElem(&List, 3, &delData);
+	printf("被删除的数据为：%d\n", delData);
+	ListElem(&List);
+	return 0;
+}*/
+//六.查找
+/*
+int findElem(SeqList* L, ElemType e) {
+	if (L->length == 0) {
+		printf("空列表\n");
+		return 0;
+	}
+	for (int i = 0; i < L->length; i++) {
+		if (L->data[i] == e) {           //下表i
+			return i + 1;               //第i+1个数
+		}
+	}
+	return 1;
+}
+int main() {
+	SeqList List;    //定义一个顺序表List
+	initList(&List);       //调用函数initList，初始化
+	printf("初始化成功，目前长度占用%d\n", List.length);
+	printf("目前占用内存%zu字节\n", sizeof(List.data));
+	appendElem(&List, 88);
+	appendElem(&List, 67);
+	appendElem(&List, 40);
+	appendElem(&List, 8);
+	appendElem(&List, 23);
+	ListElem(&List);
+	insertElem(&List, 2, 18);
+	ListElem(&List);
+	ElemType delData;
+	deleteElem(&List, 3, &delData);
+	printf("被删除的数据为：%d\n", delData);
+	ListElem(&List);
+	printf("%d\n", findElem(&List, 40));
+	return 0;
+}*/
