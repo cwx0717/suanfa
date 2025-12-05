@@ -1,0 +1,169 @@
+/*int main(int argc, char const* argv[])
+{
+	int a[] = { 15,22,67,43,87 };
+	int * p;
+	p = a;//把数组名为a赋值给指针p，此时p指向数组的第一个元素a[0]
+	printf("%p\n", a);//%p输出地址的占位符
+	printf("%p\n", p);
+	printf("%d\n", *p);//*p解引用操作，访问指针p指向的内存地址的值
+	for (int i = 0; i < sizeof(a) / sizeof(a[0]); i++) {  
+	//fsizeof(a) （数组a的总字节，5个int，假设1个int占4个字节，总字节4*5）/ sizeof(a[0])（数组单个元素的字节）计算数组长度
+		printf("%d\n",*(p+i));//*(p+i)=a[i]  //*(p+1)指针的“偏移访问”
+	}
+	return 0;
+
+
+}*/
+//结构体    一个或者多个变量的集合，这些变量可以是不同的类型（需求）.相当于java中的类去掉函数（进行操作）部分
+//声明语法：
+/*
+struct 结构体名{
+    数据类型 变量名；
+	数据类型 变量名；
+	   ....
+};
+struct point{
+	int x;
+	int y;
+};
+结构体的初始化与调用
+struct 结构体名 变量名；
+struct point p；      //初始化
+变量名.结构体内部变量名 =  值
+p.x = 10;
+p.y = 15; 
+//示例
+//定义结构体类型
+struct point {
+	int x;
+	int y;
+};
+int main() {
+	struct point p;
+	p.x = 5;
+	p.y = 10;
+	printf("%d\n", p.x);
+	printf("%d\n", p.y);
+	return 0;
+}
+//编写一个函数，传入两个int参数，在函数创造一个结构体point类型的变量，将传入的两个
+参数分别赋值给该结构体变量x，y，最后将该结构体变量返回。
+
+//定义结构体类型
+struct point {
+	int x;
+	int y;
+};
+//定义创建结构体的函数CreatPoint
+	struct point CreatPoint(int x, int y) {
+		struct point temp;
+		temp.x = x;
+		temp.y = y;
+		return temp;
+	}
+	int main() {
+		struct point p;
+		p = CreatPoint(5, 10);
+		printf("%d\n", p.x);
+		printf("%d\n", p.y);
+		return 0;
+	}
+	*/
+  //   结构体与指针（在一些场景中，如果传递给函数的结构体很大，使用指针方式的效率通常更大）
+/*  pp指向一个point的结构体
+struct point *pp;
+  pp->x=10;     //=(*pp).x=10; 为pp所指向的结构体的属性（变量）赋值
+  pp->y=2;      //=(*pp).y=5
+
+
+
+struct point {
+	int x;
+	int y;
+};
+int main() {
+	struct point p;
+	p.x = 5;
+	p.y = 10;
+
+	//定义一个指向point结构体的指针变量pp
+	struct point *pp;
+	pp = &p;     //&p 指取结构体变量p的地址
+	(*pp).x = 10;
+	(*pp).y = 5;
+
+	printf("x=%d,y=%d\n", p.x,p.y);
+	printf("x=%d,y=%d\n", pp->x,pp->y);
+	return 0;
+}
+*/
+//类型定义  typedef  (def=define) 给某一个数据类型起一个别名
+ /*    typedef 数据类型  别名
+       例子： 如果一个代码里面有很多int，但是现在需要将int都改成double,
+	   typedef int myType1;
+	   typedef char myType2;
+	   int main() {
+		   myType1 a = 5;
+		   myType2 b = 'o';
+		   printf("%d\n", a);
+		   printf("%c\n", b);
+		   return 0;
+	   }
+typedef struct 结构体名             typedef struct
+{                                 {
+      数据类型  变量名；                  数据类型  变量名；
+	  数据类型  变量名；                  数据类型  变量名
+                                           ...
+	  ...                                 }别名；  
+	 }别名；
+	 例子：
+	 typedef struct 
+	 {
+	      int x;
+		  int y;
+	  }po;
+	 int main() {
+		 po p;
+		 p.x = 5;
+		 p.y = 10;
+		 printf("%d\n", p.x);
+		 printf("%d\n", p.y);
+		 return 0;
+
+	  }
+	  */
+/*内存分类   c程序编译后，会以三种内存：
+1.静态\全局内存：
+静态声明的变量和全局变量。
+2.栈内存（自动内存）：
+函数内部声明的变量，不受我们控制
+3.堆内存（动态内存）：
+根据需求编写代码动态分配内存，受我们控制
+基本步骤：
+1.使用malloc函数分配内存
+2.使用分配的内存
+3.使用free函数释放内存
+*/
+//算法分析     算法+数据结构=程序
+// 五个重要特性：有穷性，确定性，可行性，输入，输出。
+// 评价算法的优劣标准：正确性，可读性，健壮性，高效性。
+//1.时间复杂度  T（n)=O(f(n)),随着问题规模n的增大，算法执行时间和增长率和f（n）增长率成正比。
+//2.空间复杂度
+//3.抽象数据类型ADT
+/*   图书信息管理系统
+#include <string.h>  //#include 预处理指令，把<string.h>头文件的内容引用到当前代码
+struct book {       //定义book的结构体
+	int isbn;
+	char bookName[20];
+	double price;
+};
+int main(int argc,char const *argv[]) {         //定义结构体变量
+	struct book b;
+	b.isbn = 767645;
+	strcpy_s(b.bookName,sizeof(b.bookName), "Java编程思想");   //给书名赋值,sizeof(b.bookName)计算其长度，防止超过上面定义的【20】
+	b.price = 90.0;
+	printf("isbn:%d\n", b.isbn);
+	printf("bookName:%s\n", b.bookName);  
+	printf("price:%0.1lf\n", b.price);
+	return 0;
+}*/
