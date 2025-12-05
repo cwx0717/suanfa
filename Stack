@@ -1,0 +1,157 @@
+//栈
+//一.顺序结构实现
+/*
+#include <stdio.h>       //引入输入输出头文件。作用：支持printf（打印），scanf（输入）等函数。
+#include <stdlib.h>           //引入标准库头文件 作用：支持system（"pause"）暂停控制台，malloc/free内存分配等函数
+#define MAXSIZE  100               //define 宏定义：宏名+空格+替换内容
+typedef int ElemType;
+typedef struct {
+	ElemType data[MAXSIZE];             //核心：栈的数据存储区【数组】，data：数组名（栈的容器）
+	int top;                             //top：栈的栈顶元素位置
+}stack;*/
+//初始化
+/*
+void initStack(stack* s) {
+	s->top = -1;       //top=-1表示栈空
+}
+//二.判断栈是否为空
+int isEmpty(stack* s) {
+	if (s->top == -1) {
+		printf("空的\n");
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}*/
+//三.进栈（压栈）
+/*
+int push(stack* s, ElemType e) {        //入栈函数，返回int。参数：栈指针+入栈的元素
+	if (s->top >= MAXSIZE - 1) {
+		printf("满了\n");
+		return 0;
+	}
+	s->top++;                    //指针上移
+	s->data[s->top] = e;             //元素入栈 把e存入投屏指向的数组位置
+	return 1;
+}*/
+//四.出栈（弹栈）
+/*
+int pop(stack* s, ElemType* e) {
+	if (s->top == -1) {
+		printf("空的\n");
+		return 0;
+	}
+	*e = s->data[s->top];          //取出栈顶元素，把top指向的数组值赋给*e，通过指针传出
+	s->top--;
+	return 1;
+}*/
+//获取栈顶元素
+/*
+int getTop(stack* s, ElemType* e) {
+	if (s->top == -1) {
+		return 0;
+	}
+	*e = s->data[s->top];
+	printf("【获取栈顶】当前栈顶元素为%d\n", *e);
+	return 1;
+}*/
+//遍历
+/*
+void printStack(stack *s) {
+	if (s->top == -1) {
+		printf("空栈\n");
+		return ;
+	}
+	printf("【栈内元素】（栈顶 - 栈底）：");
+	for (int i = s->top; i >= 0; i--) {
+		printf("%d ", s->data[i]);
+	}
+	printf("\n");
+}
+int main() {
+	stack s;  //定义一个栈变量s
+	ElemType e; //定义变量e
+	initStack(&s);     //初始化
+	push(&s, 10);    //入栈
+	push(&s, 20);
+	push(&s, 30);
+	printStack(&s);  //遍历，打印
+    getTop(&s, &e);   //获取栈顶元素
+	pop(&s, &e);     //出栈操作
+	printStack(&s);     
+	pop(&s, &e);
+	pop(&s, &e);
+	pop(&s, &e);
+	system("pause");
+	return 0;
+}*/
+//链式结构实现
+/*
+#include <stdio.h>       //引入输入输出头文件。作用：支持printf（打印），scanf（输入）等函数。
+#include <stdlib.h>
+typedef int ElemType;
+typedef struct stack {
+	ElemType data;
+	struct stack* next;
+}Stack;
+//初始化
+stack* initStack() 
+{
+	stack *s=(Stack*)malloc(sizeof(stack));
+	s->data = 0;            //头节点数据域0
+	s->next = NULL;             //头节点的next置空，代表栈初始为空
+	return s;
+}
+//判断栈是否为空
+int isEmpty(Stack* s) {
+	if (s->next == NULL) {
+		printf("空的\n");
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+//进栈
+int push(Stack* s, ElemType e) {
+	Stack* p = (Stack*)malloc(sizeof(stack)); //新建一个节点p存要入栈的数据e
+	p->data = e;                           //把数据e存入新节点的数据域。
+	p->next = s->next;                 //新节点的next指向当前栈顶的节点
+	s->next = p;                      //头节点的next指向新节点 -使新节点成为新栈顶
+	return 1;
+}
+//出栈
+int pop(Stack* s, ElemType* e) {
+	if (s->next == NULL) {
+		printf("空的\n");
+		return 0;
+	}
+	*e = s->next->data;     //把栈顶节点的数据存入e
+	Stack* q = s->next;        //记录栈顶节点的地址，方便后续释放内存
+	s->next = q->next;          //头节点的next指向原栈顶的下一个节点- 栈顶“下移”
+	free(q);                       //释放原栈顶节点的内存，避免内存泄露。
+	return 1;
+}
+//获取栈顶元素
+int getTop(Stack* s, ElemType* e) {
+	if (s->next == NULL) {
+		printf("空的\n");
+		return 0;
+	}
+	*e = s->next->data;         
+	return 1;
+}
+int main() {
+	Stack* s = initStack();   //初始化空栈
+	push(s, 10);           //入栈
+	push(s, 20);
+	push(s,30);
+	ElemType e;        //定义变量出栈，取栈的数据
+	pop(s, &e);           //出栈
+	printf("%d\n", e);
+	getTop(s, &e);
+	printf("%d\n", e);
+	return 0;
+}
+*/
