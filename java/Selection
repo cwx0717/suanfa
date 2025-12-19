@@ -1,1 +1,77 @@
 
+// 选择语句
+//1.顺序结构 是程序中最简单最基本的流程控制，没有特定的语法结构，按照代码的先后顺序，依次执行
+//2.Debug：是供程序员使用的程序调试工具，它可以用于查看程序的执行流程，也可以用于追踪程序执行
+//过程来调试程序
+//选择语句：if  ，switch
+/*if(结果为boolean类型的表达式){
+    语句体1；
+        }else if{
+    语句体2；
+        }
+...
+else{
+    语句体n+1
+        }
+
+ */              //重点
+public class text3 {
+    public static void main(String[] args) {
+        int score=95;
+        if (score<60) {
+            System.out.println("你成绩不及格" );
+        }
+        else if(score>=60 && score<=70){
+            System.out.println("你成绩及格");
+        }
+        else if (score>70 && score<=80){
+            System.out.println("你成绩良好");
+        }
+        else if (score>80 && score<=90){
+            System.out.println("你成绩优秀");
+        }
+        else {
+            System.out.println("你成绩非常优秀");
+        }
+    }
+
+}
+//选择语句 switch
+/*switch(表达式){
+    case 值1：
+        语句体1；
+        break；  //break中断
+    case 值2：
+        语句体1；
+        break；
+    default：   //所有值都不匹配的时候，执行该处内容
+        语句体n+1；
+        break；
+}
+
+ */
+public class text3 {
+    public static void main(String[] args) {
+//定义一个int类型的变量用来表示信号灯的状态(1表示红灯，2表示绿灯，3表示黄灯)
+        int light = 1;
+// light = 2;
+// light = 3;
+// light = 4;
+//用switch语句实现交通信号灯案例
+        switch (light) {
+            case 1:
+                System.out.println("红灯停");
+                break;
+            case 2:
+                System.out.println("绿灯行");
+                break;
+            case 3:
+                System.out.println("黄灯亮了等一等");
+                break;
+            default:
+                System.out.println("交通信号灯故障，请在保证安全的情况下通行");
+                break;
+        }
+    }
+}
+
