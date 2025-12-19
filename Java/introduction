@@ -1,1 +1,78 @@
+//           绪论
+//           字面量
+//直接写出来的人可以理解的数据，在java中叫做字面量
+//字面量：字符串（双引号），整数，小数，字符（单括号），布尔
+public class text3 {
+    public static void main(String[] args) {     //psvm快捷键
+        //字符串变量
+        System.out.println("HelloWorld");//sout快捷键
+        //整数字面量
+        System.out.println(-666);
+        //小数字面量
+        System.out.println(13.14);
+        //字符字面量
+        System.out.println('A');
+        //布尔字面量
+        System.out.println(false);
+    }
+}
 
+/*产生不同的数据类型的原因
+1.不同的内存空间
+2.不同的内存空间，所存储的数据大小是不一样的
+计算机中存储数据的最小单位是：字节(byte)，用B表示。
+ 常见的存储单位
+1TB = 1024GB
+1GB = 1024MB
+1MB = 1024KB
+1KB = 1024B
+             ***数据类型
+一.基本数据类型：
+1.数值型：
+整数，浮点数，字符（char）
+2.非数值型：
+布尔
+二.引用数据类型：
+1.类（class），字符串（string）
+2.接口（interface）
+3.数组（【】）
+                            变量
+变量就是内存中的存储空间
+空间中存储的数据是可以发生改变
+格式：数据类型 变量名 = 变量值;
+ */
+public class text3 {
+    public static void main(String[] args) {
+        int a = 988;
+        System.out.println(a);
+        //修改变量值
+        a = 888;
+        System.out.println(a);
+//定义秒杀价变量
+        double price = 3599.00;
+//定义颜色变量
+        String color = "蓝色";
+//定义版本变量，纪录的是内存大小
+        int size = 8;
+// System.out.println(price);
+// System.out.println(color);
+// System.out.println(size);
+//为了输出效果好看一些，我加上一些内容
+        System.out.println("秒杀价是：" + price);
+        System.out.println("你选择的颜色是：" + color);
+        System.out.println("你选择的版本是：" + size);
+//字符串字面值+任意的数据=字符串数据
+    }
+}
+ /*                            关键字
+关键字：就是被Java语言赋予了特定含义的单词
+关键字的特点：
+1.关键字的字母全部小写
+2.常用的代码编辑器，针对关键字有特殊的颜色标记，非常直观
+  */
+/*                            ***标识符
+标识符的组成规则：由数字、字母、下划线(_)和美元符($)组成
+注意事项：
+1.不能以数字开头
+2.不能是关键字
+3.区分大小写
